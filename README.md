@@ -3,10 +3,8 @@
 <p><a href="http://picture.h234.cn"><img align="right" width="400" src="http://res.eemu.cn/LightPicture/2022/01/1899c1ba43e06c7d.jpg" alt="LightPicture"/></a></p>
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> b4ed8fcb76f5349ea61c2da20be8f01185b301c4
+
 <h2>LightPicture - 企业/团队图床系统</h2>
 ☁ 使用thinkphp+vue开发，前后端分离；本仓库为完整版程序，下载安装即可使用；如需vue前端代码请<a href="https://github.com/osuuu/LightPicture-vue">点此查看</a>
 
