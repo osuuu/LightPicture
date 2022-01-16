@@ -1,0 +1,50 @@
+{
+    "name": "guzzlehttp/command",
+    "description": "Provides the foundation for building command-based web service clients",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Graham Campbell",
+            "email": "hello@gjcampbell.co.uk",
+            "homepage": "https://github.com/GrahamCampbell"
+        },
+        {
+            "name": "Michael Dowling",
+            "email": "mtdowling@gmail.com",
+            "homepage": "https://github.com/mtdowling"
+        },
+        {
+            "name": "Jeremy Lindblom",
+            "email": "jeremeamia@gmail.com",
+            "homepage": "https://github.com/jeremeamia"
+        },
+        {
+            "name": "Tobias Nyholm",
+            "email": "tobias.nyholm@gmail.com",
+            "homepage": "https://github.com/Nyholm"
+        }
+    ],
+    "require": {
+        "php": "^7.2.5 || ^8.0",
+        "guzzlehttp/guzzle": "^7.3",
+        "guzzlehttp/promises": "^1.3",
+        "guzzlehttp/psr7": "^1.7 || ^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5.19"
+    },
+    "autoload": {
+        "psr-4": {
+            "GuzzleHttp\\Command\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.2-dev"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
+}

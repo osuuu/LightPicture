@@ -1,0 +1,51 @@
+{
+    "name": "qcloud/cos-sdk-v5",
+    "description": "PHP SDK for QCloud COS",
+    "keywords": [
+        "qcloud", "cos", "php"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "yaozongyou",
+            "email": "yaozongyou@vip.qq.com"
+        },
+        {
+            "name": "lewzylu",
+            "email": "327874225@qq.com"
+        },
+        {
+            "name": "tuunalai",
+            "email": "550566181@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Qcloud\\Cos\\": "src/"
+        },
+        "files": ["src/Common.php"]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Qcloud\\Cos\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=5.6",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-simplexml": "*",
+        "guzzlehttp/guzzle": "^6.2.1 || ^7.0",
+        "guzzlehttp/guzzle-services": "^1.1",
+        "guzzlehttp/psr7": "^1.3.1 || ^2.0"
+    },
+    "config": {
+        "platform-check": false
+    },
+    "scripts": {
+        "test": [
+            "@putenv XDEBUG_MODE=coverage",
+            "phpunit -v --color=always"
+        ]
+    }
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0"><link rel=icon href=/favicon.ico><title>LightPicture</title><script>(function () {
+
+      if (!sessionStorage.length) {
+        // 这个调用能触发目标事件，从而达到共享数据的目的
+        localStorage.setItem('getSessionStorage', Date.now());
+      };
+
+      // 该事件是核心
+      window.addEventListener('storage', function (event) {
+        if (event.key == 'getSessionStorage') {
+          // 已存在的标签页会收到这个事件
+          localStorage.setItem('sessionStorage', JSON.stringify(sessionStorage));
+          localStorage.removeItem('sessionStorage');
+
+        } else if (event.key == 'sessionStorage' && !sessionStorage.length) {
+          // 新开启的标签页会收到这个事件
+          var data = JSON.parse(event.newValue),
+            value;
+
+          for (key in data) {
+            sessionStorage.setItem(key, data[key]);
+          }
+        }
+      });
+    })();
+    console.log(
+      "%cLightPicture",
+      "font-size: 50px;background: #EEE url(data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAAHklEQVQImWNkYGBgYGD4//8/A5wF5SBYyAr+//8PAPOCFO0Q2zq7AAAAAElFTkSuQmCC) repeat; text-shadow: 5px -5px black, 4px -4px white;  font-weight: bold;  -webkit-text-fill-color: transparent;  -webkit-background-clip: text;"
+    );
+    console.log(
+      "%c%s",
+      "color: blue; font-size: 16px;",
+      "作者邮箱admin@osuu.net \n\n你可以通过 https://www.osuu.net 了解我们 "
+    );</script><link href=/static/css/chunk-0c1547bb.54a4a9c1.css rel=prefetch><link href=/static/css/chunk-1670c41e.59754e25.css rel=prefetch><link href=/static/css/chunk-28ce6966.e6d89e7b.css rel=prefetch><link href=/static/css/chunk-5cac6c6e.1d306543.css rel=prefetch><link href=/static/css/chunk-5e1b63a1.27c1636a.css rel=prefetch><link href=/static/css/chunk-5e1e3a62.a8810318.css rel=prefetch><link href=/static/css/chunk-609108d5.c6a890f2.css rel=prefetch><link href=/static/css/chunk-707d2a1a.c401dfcf.css rel=prefetch><link href=/static/css/chunk-7a3ede26.b6e87bff.css rel=prefetch><link href=/static/css/chunk-7a802caa.8ac89c54.css rel=prefetch><link href=/static/css/chunk-89169c2c.148dfce0.css rel=prefetch><link href=/static/css/chunk-ab6ebc96.e0466953.css rel=prefetch><link href=/static/js/chunk-0c1547bb.46a13aae.js rel=prefetch><link href=/static/js/chunk-1670c41e.2ca54472.js rel=prefetch><link href=/static/js/chunk-28ce6966.82b0283c.js rel=prefetch><link href=/static/js/chunk-2d217c1d.fd68871d.js rel=prefetch><link href=/static/js/chunk-5cac6c6e.6f5d86c5.js rel=prefetch><link href=/static/js/chunk-5e1b63a1.d034144e.js rel=prefetch><link href=/static/js/chunk-5e1e3a62.40efe91f.js rel=prefetch><link href=/static/js/chunk-609108d5.501e6b79.js rel=prefetch><link href=/static/js/chunk-707d2a1a.88fbafb9.js rel=prefetch><link href=/static/js/chunk-7a3ede26.abc9342e.js rel=prefetch><link href=/static/js/chunk-7a802caa.a302c1f8.js rel=prefetch><link href=/static/js/chunk-89169c2c.8dc10dd3.js rel=prefetch><link href=/static/js/chunk-ab6ebc96.9a289538.js rel=prefetch><link href=/static/css/app.317f1471.css rel=preload as=style><link href=/static/css/chunk-vendors.f3a277b0.css rel=preload as=style><link href=/static/js/app.9599024e.js rel=preload as=script><link href=/static/js/chunk-vendors.f75149ed.js rel=preload as=script><link href=/static/css/chunk-vendors.f3a277b0.css rel=stylesheet><link href=/static/css/app.317f1471.css rel=stylesheet></head><body><noscript><strong>We're sorry but admin doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=/static/js/chunk-vendors.f75149ed.js></script><script src=/static/js/app.9599024e.js></script></body></html>
