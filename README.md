@@ -6,7 +6,7 @@
 
 
 <h2>LightPicture - 企业/团队图床系统</h2>
-☁ 使用thinkphp+vue开发，前后端分离；本仓库为完整版程序，下载安装即可使用；如需vue前端代码请<a href="https://github.com/osuuu/LightPicture-vue">点此查看</a>
+☁ 使用thinkphp+vue开发，前后端分离；本仓库为完整版程序，下载后根据安装教程安装即可使用；
 
 
 
@@ -100,8 +100,6 @@ location / {
 - Iconfont
 - viewer.js
 
-
-创作之初灵感来源于lsky-pro，特此感谢
 
 
 > ###  开源许可
