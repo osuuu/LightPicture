@@ -37,6 +37,7 @@
 * PDO 拓展
 * fileinfo 拓展
 * curl 拓展
+* ZipArchive 支持
 > 
 > ###  安装教程
 1. 下载LightPicture，上传至 web 运行环境，解压。
