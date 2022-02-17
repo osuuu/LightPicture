@@ -124,10 +124,12 @@ class Member extends BaseController
         if (isset($user2) && $user2['id'] != $user['id']) {
             return $this->create(null, '此邮箱已存在', 400);
         }
+        
+        $role_id = $user['id'] == 1?$user['role_id']:$data['role_id'];
         if($data['pwd'] == 1){
             $user->password     = sha1("123456");
         }
-        $user->role_id     = $data['role_id'];
+        $user->role_id     = $role_id;
         $user->username     = $data['username'];
         $user->phone     = $data['phone'];
         $user->email     = $data['email'];
@@ -144,6 +146,9 @@ class Member extends BaseController
     public function delete(Request $request,$id)
     {
         $uid = $request->uid;
+        if($id == 1){
+            return $this->create(null, '此账号为根管理员账号，无法删除', 400);
+        }
         try {
             UserModel::destroy($id);
             $this->setLog($uid, "删除了成员", "", "ID:".$id);

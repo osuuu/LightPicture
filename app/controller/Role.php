@@ -87,6 +87,9 @@ class Role extends BaseController
     public function delete(Request $request,$id)
     {
         $uid = $request->uid;
+        if($id == 1){
+            return $this->create(null, '此账号为根管理员分组，无法删除', 400);
+        }
         try {
             RoleModel::isDel($id);
             RoleModel::destroy($id);

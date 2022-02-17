@@ -21,6 +21,8 @@ class Index extends BaseController
     {
         $system = SystemModel::where('type', "basics")->column('value', 'key');
         $result = array(
+            "version" => VERSION,
+            "time" => RELRAASE_TIME,
             "is_reg" => (int)$system['is_reg'],
             "upload_max" => (int)$system['upload_max']*1024,
             "upload_rule" => $system['upload_rule'],

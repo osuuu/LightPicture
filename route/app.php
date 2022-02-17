@@ -70,6 +70,11 @@ Route::group('member', function () {
 	Route::delete('delete', 'Member/delete')->middleware(\app\middleware\AuthVerify::class);
 })->middleware(\app\middleware\TokenVerify::class);
 
+Route::group('updade', function () {
+	Route::get('version', 'Updade/index')->middleware(\app\middleware\AuthVerify::class);
+	Route::post('update', 'Updade/update')->middleware(\app\middleware\AuthVerify::class);
+})->middleware(\app\middleware\TokenVerify::class);
+
 Route::group('api', function () {
 	Route::post('upload', 'Api/upload');
 	Route::delete('delete', 'Api/delete');
