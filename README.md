@@ -11,7 +11,7 @@
 
 
 
-[官网](http://picture.h234.cn) &nbsp; -  &nbsp; [演示](http://pic.xyaxw.cn) &nbsp; -  &nbsp;[捕风阁](https://www.osuu.net) &nbsp;
+[官网](http://picture.h234.cn) &nbsp; -  &nbsp;[演示](http://pic.xyaxw.cn) &nbsp; -  &nbsp;[使用手册](https://www.kancloud.cn/osuu234/lightpicture/2648408) &nbsp; -  &nbsp;[作者博客](https://www.osuu.net) &nbsp;
 
 
 
@@ -19,7 +19,7 @@
 ![2a2cd7d94cbc9db7.png](http://res.eemu.cn/LightPicture/2022/01/2a2cd7d94cbc9db7.png)
 
 
-> ###  程序功能
+##  程序功能
 * 支持第三方云储存，本地、阿里云 OSS、腾讯云 COS、七牛云
 * 支持多桶储存，可同时添加多个对象存储桶管理
 * 多图上传、拖拽上传、粘贴上传、上传预览、全屏预览、一键复制图片外链
@@ -31,15 +31,15 @@
 * 原创Geek扁平化页面风格，简约大气；前端使用vue开发，前后端分离
 
 
-> ###  安装要求
+##  安装要求
 * PHP 版本 &ge; 7.2
 * Mysql版本 &ge; 5.5
 * PDO 拓展
 * fileinfo 拓展
 * curl 拓展
 * ZipArchive 支持
-> 
-> ###  安装教程
+
+##  安装教程
 1. 下载LightPicture，上传至 web 运行环境，解压。
 2. 设置运行目录为 public。
 3. 配置网站默认文档：
@@ -49,7 +49,7 @@ index.php
 ~~~
 
 4. 配置 Rewrite 规则为：thinkphp
- ####  \[ Apache \]
+####  \[ Apache \]
 
 ~~~
 <IfModule mod_rewrite.c>
@@ -61,7 +61,7 @@ index.php
   RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
 </IfModule>
 ~~~
-###  \[ Nginx\]
+####  \[ Nginx\]
 
 ~~~
 location / { 
@@ -76,10 +76,10 @@ location / {
 
 注：完成后若开启前台注册请登录管理员账号配置发信邮箱
 
-> ###  联系我
+##  联系我
 - Email: admin@osuu.net
 
-> ###  捐赠/打赏
+##  捐赠/打赏
 如果您认可我的作品，并且觉得对你有所帮助我愿意接受来自各方面的捐赠    
 <table width="100%">
     <tr>
@@ -94,7 +94,7 @@ location / {
 
 
 
-> ###  鸣谢
+##  鸣谢
 - ThinkPHP
 - Vue
 - iviewUI
@@ -103,7 +103,7 @@ location / {
 
 
 
-> ###  开源许可
+##  开源许可
 [GPL 3.0](https://opensource.org/licenses/GPL-3.0)
 
 Copyright (c) 2022  [LightPicture](http://picture.h234.cn).
