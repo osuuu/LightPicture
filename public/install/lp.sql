@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2022-01-15 17:54:08
+-- 生成日期： 2022-02-17 09:26:05
 -- 服务器版本： 5.6.50-log
--- PHP 版本： 7.2.33
+-- PHP 版本： 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- 数据库： `picture`
+-- 数据库： `lightpicture`
 --
 
 -- --------------------------------------------------------
@@ -233,7 +233,8 @@ ALTER TABLE `osuu_storage`
 -- 表的索引 `osuu_system`
 --
 ALTER TABLE `osuu_system`
-  ADD PRIMARY KEY (`id`) USING BTREE;
+  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD UNIQUE KEY `key` (`key`) USING BTREE;
 
 --
 -- 表的索引 `osuu_user`
