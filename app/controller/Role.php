@@ -76,6 +76,9 @@ class Role extends BaseController
         $uid = $request->uid;
         $data = $request->param();
         if ($data['default'] == 1) RoleModel::toClear($data['default']);
+        if ($data['default'] == 0){
+            return $this->create(null, '至少需保留一个默认角色组', 400);
+        }
         $id = RoleModel::update($data)->getData('id');
         $this->setLog($uid, "修改了角色组", $data['name'], "ID:".$id);
         return $this->create(null, empty($id) ? '修改失败' : '修改成功', empty($id) ? 400 : 200);
