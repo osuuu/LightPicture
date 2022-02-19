@@ -1,5 +1,4 @@
 <?php
-
 namespace GuzzleHttp\Promise;
 
 /**
@@ -14,10 +13,9 @@ class RejectedPromise implements PromiseInterface
 
     public function __construct($reason)
     {
-        if (is_object($reason) && method_exists($reason, 'then')) {
+        if (method_exists($reason, 'then')) {
             throw new \InvalidArgumentException(
-                'You cannot create a RejectedPromise with a promise.'
-            );
+                'You cannot create a RejectedPromise with a promise.');
         }
 
         $this->reason = $reason;
@@ -32,11 +30,11 @@ class RejectedPromise implements PromiseInterface
             return $this;
         }
 
-        $queue = Utils::queue();
+        $queue = queue();
         $reason = $this->reason;
         $p = new Promise([$queue, 'run']);
         $queue->add(static function () use ($p, $reason, $onRejected) {
-            if (Is::pending($p)) {
+            if ($p->getState() === self::PENDING) {
                 try {
                     // Return a resolved promise if onRejected does not throw.
                     $p->resolve($onRejected($reason));
@@ -61,10 +59,8 @@ class RejectedPromise implements PromiseInterface
     public function wait($unwrap = true, $defaultDelivery = null)
     {
         if ($unwrap) {
-            throw Create::exceptionFor($this->reason);
+            throw exception_for($this->reason);
         }
-
-        return null;
     }
 
     public function getState()

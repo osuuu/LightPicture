@@ -16,7 +16,7 @@ try {
     $result = $cosClient->copyObject(array(
         'Bucket' => 'examplebucket-125000000', //存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
         'Key' => 'exampleobject',
-        'CopySource' => 'examplebucket2-125000000.cos.ap-guangzhou.myqcloud.com/exampleobject',
+        'CopySource' => urlencode('examplebucket2-125000000.cos.ap-guangzhou.myqcloud.com/exampleobject'), //请注意这里需要urlencode，防止因特殊字符产生的400或404错误
         'MetadataDirective' => 'Replaced',
     ));
     // 请求成功
@@ -25,4 +25,3 @@ try {
     // 请求失败
     echo($e);
 }
-

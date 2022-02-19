@@ -40,12 +40,17 @@
         "guzzlehttp/psr7": "^1.3.1 || ^2.0"
     },
     "config": {
-        "platform-check": false
+        "optimize-autoloader": true
     },
     "scripts": {
         "test": [
             "@putenv XDEBUG_MODE=coverage",
             "phpunit -v --color=always"
         ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.4-dev"
+        }
     }
 }

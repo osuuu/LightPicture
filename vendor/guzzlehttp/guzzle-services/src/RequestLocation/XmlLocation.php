@@ -101,7 +101,7 @@ class XmlLocation extends AbstractLocation
         }
 
         if ($xml !== '') {
-            $request = $request->withBody(Psr7\Utils::streamFor($xml));
+            $request = $request->withBody(Psr7\stream_for($xml));
             // Don't overwrite the Content-Type if one is set
             if ($this->contentType && !$request->hasHeader('Content-Type')) {
                 $request = $request->withHeader('Content-Type', $this->contentType);

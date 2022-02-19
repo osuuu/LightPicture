@@ -75,49 +75,28 @@ class Images extends BaseController
         $userInfo =  UserModel::find($uid);
         $role = RoleModel::find($userInfo['role_id']);
         $imgs =  ImagesModel::find($id);
+        $UploadCLass = new UploadCLass;
 
         if ($role['is_admin'] == 1) {
-            $this->toDel($imgs["path"], $imgs['storage_id']);
+            $UploadCLass->delete($imgs["path"], $imgs['storage_id']);
             $name = $imgs['name'];
             $imgs->delete();
             $this->setLog($uid, "删除了图片", "ID:".$id, $name,2);
             return $this->create($name, '删除成功', 200);
         } else  if ($role['is_del_own'] == 1 && $imgs['user_id'] == $uid) {
-            $this->toDel($imgs["path"], $imgs['storage_id']);
+            $UploadCLass->delete($imgs["path"], $imgs['storage_id']);
             $name = $imgs['name'];
             $imgs->delete();
             $this->setLog($uid, "删除了图片", "ID:".$id, $name,2);
             return $this->create($name, '删除成功', 200);
         } else  if ($role['is_del_all'] == 1 && $imgs['storage_id'] == $role['storage_id']) {
-            $this->toDel($imgs["path"], $imgs['storage_id']);
+            $UploadCLass->delete($imgs["path"], $imgs['storage_id']);
             $name = $imgs['name'];
             $imgs->delete();
             $this->setLog($uid, "删除了图片", "ID:".$id, $name,2);
             return $this->create($name, '删除成功', 200);
         } else {
             return $this->create('当前角色组没有删除权限', '删除失败', 400);
-        }
-    }
-
-    // 删除
-    public function toDel($path, $sid)
-    {
-        $UploadCLass = new UploadCLass;
-        $storage = StorageModel::find($sid);
-        switch ($storage['type']) {
-            case 'local':
-                return $UploadCLass->location_delete($path, $sid);
-                break;
-            case 'cos':
-                return $UploadCLass->tencent_delete($path, $sid);
-                break;
-            case 'oss':
-                return $UploadCLass->aliyuncs_delete($path, $sid);
-                break;
-            case 'kodo':
-                return $UploadCLass->qiniu_delete($path, $sid);
-                break;
-            default:
         }
     }
 }

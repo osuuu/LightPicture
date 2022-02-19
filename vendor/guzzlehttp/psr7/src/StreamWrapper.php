@@ -1,17 +1,12 @@
 <?php
-
-declare(strict_types=1);
-
 namespace GuzzleHttp\Psr7;
 
 use Psr\Http\Message\StreamInterface;
 
 /**
  * Converts Guzzle streams into PHP stream resources.
- *
- * @see https://www.php.net/streamwrapper
  */
-final class StreamWrapper
+class StreamWrapper
 {
     /** @var resource */
     public $context;
@@ -28,7 +23,6 @@ final class StreamWrapper
      * @param StreamInterface $stream The stream to get a resource for
      *
      * @return resource
-     *
      * @throws \InvalidArgumentException if stream is not readable or writable
      */
     public static function getResource(StreamInterface $stream)
@@ -44,32 +38,22 @@ final class StreamWrapper
                 . 'writable, or both.');
         }
 
-        return fopen('guzzle://stream', $mode, false, self::createStreamContext($stream));
-    }
-
-    /**
-     * Creates a stream context that can be used to open a stream as a php stream resource.
-     *
-     * @return resource
-     */
-    public static function createStreamContext(StreamInterface $stream)
-    {
-        return stream_context_create([
+        return fopen('guzzle://stream', $mode, null, stream_context_create([
             'guzzle' => ['stream' => $stream]
-        ]);
+        ]));
     }
 
     /**
      * Registers the stream wrapper if needed
      */
-    public static function register(): void
+    public static function register()
     {
         if (!in_array('guzzle', stream_get_wrappers())) {
             stream_wrapper_register('guzzle', __CLASS__);
         }
     }
 
-    public function stream_open(string $path, string $mode, int $options, string &$opened_path = null): bool
+    public function stream_open($path, $mode, $options, &$opened_path)
     {
         $options = stream_context_get_options($this->context);
 
@@ -83,55 +67,39 @@ final class StreamWrapper
         return true;
     }
 
-    public function stream_read(int $count): string
+    public function stream_read($count)
     {
         return $this->stream->read($count);
     }
 
-    public function stream_write(string $data): int
+    public function stream_write($data)
     {
-        return $this->stream->write($data);
+        return (int) $this->stream->write($data);
     }
 
-    public function stream_tell(): int
+    public function stream_tell()
     {
         return $this->stream->tell();
     }
 
-    public function stream_eof(): bool
+    public function stream_eof()
     {
         return $this->stream->eof();
     }
 
-    public function stream_seek(int $offset, int $whence): bool
+    public function stream_seek($offset, $whence)
     {
         $this->stream->seek($offset, $whence);
 
         return true;
     }
 
-    /**
-     * @return resource|false
-     */
-    public function stream_cast(int $cast_as)
-    {
-        $stream = clone($this->stream);
-        $resource = $stream->detach();
-
-        return $resource ?? false;
-    }
-
-    /**
-     * @return array<int|string, int>
-     */
-    public function stream_stat(): array
+    public function stream_stat()
     {
         static $modeMap = [
             'r'  => 33060,
-            'rb' => 33060,
             'r+' => 33206,
-            'w'  => 33188,
-            'wb' => 33188
+            'w'  => 33188
         ];
 
         return [
@@ -143,28 +111,6 @@ final class StreamWrapper
             'gid'     => 0,
             'rdev'    => 0,
             'size'    => $this->stream->getSize() ?: 0,
-            'atime'   => 0,
-            'mtime'   => 0,
-            'ctime'   => 0,
-            'blksize' => 0,
-            'blocks'  => 0
-        ];
-    }
-
-    /**
-     * @return array<int|string, int>
-     */
-    public function url_stat(string $path, int $flags): array
-    {
-        return [
-            'dev'     => 0,
-            'ino'     => 0,
-            'mode'    => 0,
-            'nlink'   => 0,
-            'uid'     => 0,
-            'gid'     => 0,
-            'rdev'    => 0,
-            'size'    => 0,
             'atime'   => 0,
             'mtime'   => 0,
             'ctime'   => 0,

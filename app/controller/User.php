@@ -36,7 +36,15 @@ class User extends BaseController
         $scheme = $request->scheme();
         $user = UserModel::find($uid);
         $role = RoleModel::find($user['role_id']);
-        $user['role'] = $role;
+        $user['role'] = array(
+            "is_add" => $role['is_add'],
+            "is_admin" => $role['is_admin'],
+            "is_del_all" => $role['is_del_all'],
+            "is_del_own" => $role['is_del_own'],
+            "is_read" => $role['is_read'],
+            "is_read_all" => $role['is_read_all'],
+            "name" => $role['name']
+        );
         $user['scheme'] = $scheme;
         $user['url'] = $url;
         $user['capacity'] = (int)$user['capacity'];
@@ -139,13 +147,13 @@ class User extends BaseController
         $query['type'] = $data['type'];
         if ($data['type'] == 1) unset($query['type']);
 
-        if($role['is_admin'] == 1){
-            if($data['read'] == 1){
+        if ($role['is_admin'] == 1) {
+            if ($data['read'] == 1) {
                 $query['uid'] = $uid;
-            }else{
+            } else {
                 unset($query['uid']);
             }
-        }else{
+        } else {
             $query['uid'] = $uid;
         }
 

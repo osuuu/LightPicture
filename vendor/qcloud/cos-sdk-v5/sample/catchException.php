@@ -27,4 +27,3 @@ try {
     $request = $e->getRequest(); // 获取完整的请求
     $response = $e->getResponse(); // 获取完整的响应
 }
-

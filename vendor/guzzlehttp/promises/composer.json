@@ -5,31 +5,16 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Graham Campbell",
-            "email": "hello@gjcampbell.co.uk",
-            "homepage": "https://github.com/GrahamCampbell"
-        },
-        {
             "name": "Michael Dowling",
             "email": "mtdowling@gmail.com",
             "homepage": "https://github.com/mtdowling"
-        },
-        {
-            "name": "Tobias Nyholm",
-            "email": "tobias.nyholm@gmail.com",
-            "homepage": "https://github.com/Nyholm"
-        },
-        {
-            "name": "Tobias Schultze",
-            "email": "webmaster@tubo-world.de",
-            "homepage": "https://github.com/Tobion"
         }
     ],
     "require": {
-        "php": ">=5.5"
+        "php": ">=5.5.0"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^4.4 || ^5.1"
+        "phpunit/phpunit": "^4.0"
     },
     "autoload": {
         "psr-4": {
@@ -37,22 +22,13 @@
         },
         "files": ["src/functions_include.php"]
     },
-    "autoload-dev": {
-        "psr-4": {
-            "GuzzleHttp\\Promise\\Tests\\": "tests/"
-        }
-    },
     "scripts": {
-        "test": "vendor/bin/simple-phpunit",
-        "test-ci": "vendor/bin/simple-phpunit --coverage-text"
+        "test": "vendor/bin/phpunit",
+        "test-ci": "vendor/bin/phpunit --coverage-text"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.5-dev"
+            "dev-master": "1.4-dev"
         }
-    },
-    "config": {
-        "preferred-install": "dist",
-        "sort-packages": true
     }
 }

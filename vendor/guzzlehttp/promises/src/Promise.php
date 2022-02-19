@@ -1,5 +1,4 @@
 <?php
-
 namespace GuzzleHttp\Promise;
 
 /**
@@ -42,13 +41,14 @@ class Promise implements PromiseInterface
 
         // Return a fulfilled promise and immediately invoke any callbacks.
         if ($this->state === self::FULFILLED) {
-            $promise = Create::promiseFor($this->result);
-            return $onFulfilled ? $promise->then($onFulfilled) : $promise;
+            return $onFulfilled
+                ? promise_for($this->result)->then($onFulfilled)
+                : promise_for($this->result);
         }
 
         // It's either cancelled or rejected, so return a rejected promise
         // and immediately invoke any callbacks.
-        $rejection = Create::rejectionFor($this->result);
+        $rejection = rejection_for($this->result);
         return $onRejected ? $rejection->then(null, $onRejected) : $rejection;
     }
 
@@ -61,15 +61,19 @@ class Promise implements PromiseInterface
     {
         $this->waitIfPending();
 
-        if ($this->result instanceof PromiseInterface) {
-            return $this->result->wait($unwrap);
-        }
+        $inner = $this->result instanceof PromiseInterface
+            ? $this->result->wait($unwrap)
+            : $this->result;
+
         if ($unwrap) {
-            if ($this->state === self::FULFILLED) {
-                return $this->result;
+            if ($this->result instanceof PromiseInterface
+                || $this->state === self::FULFILLED
+            ) {
+                return $inner;
+            } else {
+                // It's rejected so "unwrap" and throw an exception.
+                throw exception_for($inner);
             }
-            // It's rejected so "unwrap" and throw an exception.
-            throw Create::exceptionFor($this->result);
         }
     }
 
@@ -99,7 +103,6 @@ class Promise implements PromiseInterface
         }
 
         // Reject the promise only if it wasn't rejected in a then callback.
-        /** @psalm-suppress RedundantCondition */
         if ($this->state === self::PENDING) {
             $this->reject(new CancellationException('Promise has been cancelled'));
         }
@@ -145,15 +148,17 @@ class Promise implements PromiseInterface
 
         // If the value was not a settled promise or a thenable, then resolve
         // it in the task queue using the correct ID.
-        if (!is_object($value) || !method_exists($value, 'then')) {
+        if (!method_exists($value, 'then')) {
             $id = $state === self::FULFILLED ? 1 : 2;
             // It's a success, so resolve the handlers in the queue.
-            Utils::queue()->add(static function () use ($id, $value, $handlers) {
+            queue()->add(static function () use ($id, $value, $handlers) {
                 foreach ($handlers as $handler) {
                     self::callHandler($id, $value, $handler);
                 }
             });
-        } elseif ($value instanceof Promise && Is::pending($value)) {
+        } elseif ($value instanceof Promise
+            && $value->getState() === self::PENDING
+        ) {
             // We can just merge our handlers onto the next promise.
             $value->handlers = array_merge($value->handlers, $handlers);
         } else {
@@ -179,6 +184,8 @@ class Promise implements PromiseInterface
      * @param int   $index   1 (resolve) or 2 (reject).
      * @param mixed $value   Value to pass to the callback.
      * @param array $handler Array of handler data (promise and callbacks).
+     *
+     * @return array Returns the next group to resolve.
      */
     private static function callHandler($index, $value, array $handler)
     {
@@ -187,21 +194,13 @@ class Promise implements PromiseInterface
 
         // The promise may have been cancelled or resolved before placing
         // this thunk in the queue.
-        if (Is::settled($promise)) {
+        if ($promise->getState() !== self::PENDING) {
             return;
         }
 
         try {
             if (isset($handler[$index])) {
-                /*
-                 * If $f throws an exception, then $handler will be in the exception
-                 * stack trace. Since $handler contains a reference to the callable
-                 * itself we get a circular reference. We clear the $handler
-                 * here to avoid that memory leak.
-                 */
-                $f = $handler[$index];
-                unset($handler);
-                $promise->resolve($f($value));
+                $promise->resolve($handler[$index]($value));
             } elseif ($index === 1) {
                 // Forward resolution values as-is.
                 $promise->resolve($value);
@@ -225,16 +224,15 @@ class Promise implements PromiseInterface
         } elseif ($this->waitList) {
             $this->invokeWaitList();
         } else {
-            // If there's no wait function, then reject the promise.
+            // If there's not wait function, then reject the promise.
             $this->reject('Cannot wait on a promise that has '
                 . 'no internal wait function. You must provide a wait '
                 . 'function when constructing the promise to be able to '
                 . 'wait on a promise.');
         }
 
-        Utils::queue()->run();
+        queue()->run();
 
-        /** @psalm-suppress RedundantCondition */
         if ($this->state === self::PENDING) {
             $this->reject('Invoking the wait callback did not resolve the promise');
         }
@@ -265,13 +263,17 @@ class Promise implements PromiseInterface
         $this->waitList = null;
 
         foreach ($waitList as $result) {
-            do {
+            while (true) {
                 $result->waitIfPending();
-                $result = $result->result;
-            } while ($result instanceof Promise);
 
-            if ($result instanceof PromiseInterface) {
-                $result->wait(false);
+                if ($result->result instanceof Promise) {
+                    $result = $result->result;
+                } else {
+                    if ($result->result instanceof PromiseInterface) {
+                        $result->result->wait(false);
+                    }
+                    break;
+                }
             }
         }
     }

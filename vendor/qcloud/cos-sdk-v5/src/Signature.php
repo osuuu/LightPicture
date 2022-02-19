@@ -74,7 +74,8 @@ class Signature {
         foreach ( explode( '&', $request->getUri()->getQuery() ) as $query ) {
             if (!empty($query)) {
                 $tmpquery = explode( '=', $query );
-                $key = strtolower( $tmpquery[0] );
+                //为了保证CI的key中有=号的情况也能正常通过，ci在这层之前已经encode了，这里需要拆开重新encode，防止上方explode拆错
+                $key = strtolower( rawurlencode(urldecode($tmpquery[0])) );
                 if (count($tmpquery) >= 2) {
                     $value = $tmpquery[1];
                 } else {

@@ -114,9 +114,11 @@ class Storage extends BaseController
     {
         $result = array(
             'local' => '本地存储',
-            'cos' => '腾讯云cos',
-            'oss' => '阿里云oss',
-            'kodo' => '七牛云kodo',
+            'cos' => '腾讯云 COS',
+            'oss' => '阿里云 OSS',
+            'kodo' => '七牛云 KODO',
+            'uss' => '又拍云 USS',
+            'obs' => '华为云 OBS',
         );
         return $this->create($result, '成功', 200);
     }

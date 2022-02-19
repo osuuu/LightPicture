@@ -151,7 +151,7 @@ class CommandToRequestTransformer {
                 foreach ( $params as $key => $value ) {
                     $uri = $request->getUri();
                     $query = $uri->getQuery();
-                    $uri = $uri->withQuery($query. "&" . $key . "=" . $value );
+                    $uri = $uri->withQuery($query. "&" . urlencode($key) . "=" . $value );
                     $request = $request->withUri( $uri );
                 }
             }
@@ -226,6 +226,9 @@ class CommandToRequestTransformer {
             $ciActions = array(
                 'DetectText' => 1,
                 'CreateMediaTranscodeJobs' => 1,
+                'CreateMediaJobs' => 1,
+                'DescribeMediaJob' => 1,
+                'DescribeMediaJobs' => 1,
                 'CreateMediaSnapshotJobs' => 1,
                 'CreateMediaConcatJobs' => 1,
                 'DetectAudio' => 1,
@@ -240,6 +243,13 @@ class CommandToRequestTransformer {
                 'DescribeDocProcessJob' => 1,
                 'GetDescribeDocProcessJobs' => 1,
                 'DetectImages' => 1,
+                'GetDetectImageResult' => 1,
+                'DetectVirus' => 1,
+                'GetDetectVirusResult' => 1,
+                'CreateMediaVoiceSeparateJobs' => 1,
+                'DescribeMediaVoiceSeparateJob' => 1,
+                'DetectWebpage' => 1,
+                'GetDetectWebpageResult' => 1,
             );
             if (key_exists($action, $ciActions)) {
                 $bucketname = $command['Bucket'];

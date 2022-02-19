@@ -44,6 +44,6 @@ class BodyLocation extends AbstractLocation
             $value = $oldValue . '&' . $value;
         }
 
-        return $request->withBody(Psr7\Utils::streamFor($value));
+        return $request->withBody(Psr7\stream_for($value));
     }
 }

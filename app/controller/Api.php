@@ -42,15 +42,16 @@ class Api extends BaseController
             return $this->create(null, '图片大小超出限制', 400);
         }
         $user = UserModel::where("Secret_key", $key)->find();
-        if(!isset($user) ||$user['state'] == 0) return $this->create(null, '用户不存在或被停用', 400);
+        if (!isset($user) || $user['state'] == 0) return $this->create(null, '用户不存在或被停用', 400);
 
         $allSize = ImagesModel::where('user_id', $user['id'])->sum('size');
-        if($allSize + $_FILES["file"]['size'] > $user['capacity']){
+        if ($allSize + $_FILES["file"]['size'] > $user['capacity']) {
             return $this->create(null, '您的存储配额不足', 400);
         }
-        
+
         $role = RoleModel::find($user['role_id']);
-        $result = $this->toUpload($_FILES["file"], $role['storage_id']);
+        $UploadCLass = new UploadCLass;
+        $result = $UploadCLass->create($_FILES["file"], $role['storage_id']);
         if ($result['state'] == 1) {
             $img = new ImagesModel;
             $img->save([
@@ -70,29 +71,7 @@ class Api extends BaseController
         }
     }
 
-    /**
-     * 上传
-     */
-    public function toUpload($file, $sid)
-    {
-        $UploadCLass = new UploadCLass;
-        $storage = StorageModel::find($sid);
-        switch ($storage['type']) {
-            case 'local':
-                return $UploadCLass->location_upload($file, $sid);
-                break;
-            case 'cos':
-                return $UploadCLass->tencent_upload($file, $sid);
-                break;
-            case 'oss':
-                return $UploadCLass->aliyuncs_upload($file, $sid);
-                break;
-            case 'kodo':
-                return $UploadCLass->qiniu_upload($file, $sid);
-                break;
-            default:
-        }
-    }
+  
 
     // 删除
     public function delete(Request $request)
@@ -104,25 +83,26 @@ class Api extends BaseController
         }
         if (!$id) return $this->create([], '图片id为空', 400);
         $user = UserModel::where("Secret_key", $key)->find();
-        if(!isset($user) ||$user['state'] == 0) return $this->create(null, '用户不存在或被停用', 400);
+        if (!isset($user) || $user['state'] == 0) return $this->create(null, '用户不存在或被停用', 400);
         $role = RoleModel::find($user['role_id']);
         $imgs =  ImagesModel::find($id);
         $uid = $user['id'];
+        $UploadCLass = new UploadCLass;
 
         if ($role['is_admin'] == 1) {
-            $this->toDel($imgs["path"], $imgs['storage_id']);
+            $UploadCLass->delete($imgs["path"], $imgs['storage_id']);
             $name = $imgs['name'];
             $imgs->delete();
             $this->setLog($uid, "删除了图片", "ID:" . $id, $name, 2);
             return $this->create($name, '删除成功', 200);
         } else  if ($role['is_del_own'] == 1 && $imgs['user_id'] == $uid) {
-            $this->toDel($imgs["path"], $imgs['storage_id']);
+            $UploadCLass->delete($imgs["path"], $imgs['storage_id']);
             $name = $imgs['name'];
             $imgs->delete();
             $this->setLog($uid, "删除了图片", "ID:" . $id, $name, 2);
             return $this->create($name, '删除成功', 200);
         } else  if ($role['is_del_all'] == 1 && $imgs['storage_id'] == $role['storage_id']) {
-            $this->toDel($imgs["path"], $imgs['storage_id']);
+            $UploadCLass->delete($imgs["path"], $imgs['storage_id']);
             $name = $imgs['name'];
             $imgs->delete();
             $this->setLog($uid, "删除了图片", "ID:" . $id, $name, 2);
@@ -130,28 +110,7 @@ class Api extends BaseController
         } else {
             return $this->create('当前角色组没有删除权限', '删除失败', 400);
         }
-
     }
 
-    // 删除
-    public function toDel($path, $sid)
-    {
-        $UploadCLass = new UploadCLass;
-        $storage = StorageModel::find($sid);
-        switch ($storage['type']) {
-            case 'local':
-                return $UploadCLass->location_delete($path, $sid);
-                break;
-            case 'cos':
-                return $UploadCLass->tencent_delete($path, $sid);
-                break;
-            case 'oss':
-                return $UploadCLass->aliyuncs_delete($path, $sid);
-                break;
-            case 'kodo':
-                return $UploadCLass->qiniu_delete($path, $sid);
-                break;
-            default:
-        }
-    }
+    
 }

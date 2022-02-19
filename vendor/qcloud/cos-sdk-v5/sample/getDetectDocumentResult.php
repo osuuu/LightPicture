@@ -8,14 +8,14 @@ $region = "ap-beijing"; //替换为用户的 region，已创建桶归属的regio
 $cosClient = new Qcloud\Cos\Client(
     array(
         'region' => $region,
-        'schema' => 'https', //协议头部，默认为http
+        'schema' => 'https', // 审核时必须为https
         'credentials'=> array(
             'secretId'  => $secretId ,
             'secretKey' => $secretKey)));
 try {
     $result = $cosClient->getDetectDocumentResult(array(
         'Bucket' => 'examplebucket-125000000', //存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
-        'Key' => 'exampleobject', // jobId
+        'Key' => '', // jobId
     ));
     // 请求成功
     print_r($result);
@@ -23,4 +23,3 @@ try {
     // 请求失败
     echo($e);
 }
-

@@ -99,7 +99,7 @@ class GuzzleClient extends ServiceClient
      */
     private function getSerializer($commandToRequestTransformer)
     {
-        return $commandToRequestTransformer !== null
+        return $commandToRequestTransformer ==! null
             ? $commandToRequestTransformer
             : new Serializer($this->description);
     }
@@ -114,7 +114,7 @@ class GuzzleClient extends ServiceClient
     {
         $process = (! isset($this->config['process']) || $this->config['process'] === true);
 
-        return $responseToResultTransformer !== null
+        return $responseToResultTransformer ==! null
             ? $responseToResultTransformer
             : new Deserializer($this->description, $process);
     }

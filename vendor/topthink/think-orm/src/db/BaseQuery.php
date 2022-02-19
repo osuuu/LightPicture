@@ -137,7 +137,7 @@ abstract class BaseQuery
             $query->name($this->name);
         }
 
-        if (isset($this->options['json'])) {
+        if (!empty($this->options['json'])) {
             $query->json($this->options['json'], $this->options['json_assoc']);
         }
 
@@ -278,7 +278,11 @@ abstract class BaseQuery
     public function column($field, string $key = ''): array
     {
         $result = $this->connection->column($this, $field, $key);
-        $this->resultSet($result, false);
+
+        if (count($result) != count($result, 1)) {
+            $this->resultSet($result, false);
+        }
+
         return $result;
     }
 
@@ -867,6 +871,7 @@ abstract class BaseQuery
     {
         $this->options['json']       = $json;
         $this->options['json_assoc'] = $assoc;
+
         return $this;
     }
 
@@ -1124,7 +1129,7 @@ abstract class BaseQuery
      * 查找单条记录
      * @access public
      * @param mixed $data 查询数据
-     * @return array|Model|null|static
+     * @return array|Model|null|static|mixed
      * @throws Exception
      * @throws ModelNotFoundException
      * @throws DataNotFoundException
@@ -1149,7 +1154,7 @@ abstract class BaseQuery
 
         if (!empty($this->model)) {
             // 返回模型对象
-            $this->resultToModel($result, $this->options);
+            $this->resultToModel($result);
         } else {
             $this->result($result);
         }
@@ -1178,7 +1183,7 @@ abstract class BaseQuery
             $this->parseView($options);
         }
 
-        foreach (['data', 'order', 'join', 'union'] as $name) {
+        foreach (['data', 'order', 'join', 'union', 'filter', 'json', 'with_attr', 'with_relation_attr'] as $name) {
             if (!isset($options[$name])) {
                 $options[$name] = [];
             }
@@ -1188,7 +1193,7 @@ abstract class BaseQuery
             $options['strict'] = $this->connection->getConfig('fields_strict');
         }
 
-        foreach (['master', 'lock', 'fetch_sql', 'array', 'distinct', 'procedure'] as $name) {
+        foreach (['master', 'lock', 'fetch_sql', 'array', 'distinct', 'procedure', 'with_cache'] as $name) {
             if (!isset($options[$name])) {
                 $options[$name] = false;
             }

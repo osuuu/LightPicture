@@ -106,8 +106,13 @@ class ResultTransformer {
 
         $xml2JsonActions = array(
             'CreateMediaTranscodeJobs' => 1,
+            'CreateMediaJobs' => 1,
+            'DescribeMediaJob' => 1,
+            'DescribeMediaJobs' => 1,
             'CreateMediaSnapshotJobs' => 1,
             'CreateMediaConcatJobs' => 1,
+            'CreateMediaVoiceSeparateJobs' => 1,
+            'DescribeMediaVoiceSeparateJob' => 1,
         );
         if (key_exists($action, $xml2JsonActions)) {
             $length = intval($result['ContentLength']);

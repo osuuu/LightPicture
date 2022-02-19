@@ -4,21 +4,20 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitb20def97c96237f47d007ad3512f1ff3
+class ComposerStaticInit5a90e71634f8fad0dc07c9b0882e8bfb
 {
     public static $files = array (
-        '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
-        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '9b552a3cc426e3287cc811caefa3cf53' => __DIR__ . '/..' . '/topthink/think-helper/src/helper.php',
-        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '35fab96057f1bf5e7aba31a8a6d5fdde' => __DIR__ . '/..' . '/topthink/think-orm/stubs/load_stubs.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '25072dd6e2470089de65ae7bf11d3109' => __DIR__ . '/..' . '/symfony/polyfill-php72/bootstrap.php',
-        '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
+        'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         'cd5441689b14144e5573bf989ee47b34' => __DIR__ . '/..' . '/qcloud/cos-sdk-v5/src/Common.php',
         '841780ea2e1d6545ea3a253239d59c05' => __DIR__ . '/..' . '/qiniu/php-sdk/src/Qiniu/functions.php',
+        '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -30,6 +29,10 @@ class ComposerStaticInitb20def97c96237f47d007ad3512f1ff3
         'a' => 
         array (
             'app\\' => 4,
+        ),
+        'U' => 
+        array (
+            'Upyun\\' => 6,
         ),
         'S' => 
         array (
@@ -48,14 +51,18 @@ class ComposerStaticInitb20def97c96237f47d007ad3512f1ff3
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
-            'Psr\\Http\\Client\\' => 16,
             'Psr\\Container\\' => 14,
             'Psr\\Cache\\' => 10,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
         'O' => 
         array (
+            'Obs\\' => 4,
             'OSS\\' => 4,
+        ),
+        'M' => 
+        array (
+            'Monolog\\' => 8,
         ),
         'L' => 
         array (
@@ -65,7 +72,6 @@ class ComposerStaticInitb20def97c96237f47d007ad3512f1ff3
         ),
         'G' => 
         array (
-            'GuzzleHttp\\UriTemplate\\' => 23,
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\Command\\Guzzle\\' => 26,
@@ -85,13 +91,17 @@ class ComposerStaticInitb20def97c96237f47d007ad3512f1ff3
         ),
         'think\\' => 
         array (
-            0 => __DIR__ . '/..' . '/topthink/framework/src/think',
-            1 => __DIR__ . '/..' . '/topthink/think-helper/src',
-            2 => __DIR__ . '/..' . '/topthink/think-orm/src',
+            0 => __DIR__ . '/..' . '/topthink/think-helper/src',
+            1 => __DIR__ . '/..' . '/topthink/think-orm/src',
+            2 => __DIR__ . '/..' . '/topthink/framework/src/think',
         ),
         'app\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
+        ),
+        'Upyun\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/upyun/sdk/src/Upyun',
         ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
@@ -128,11 +138,6 @@ class ComposerStaticInitb20def97c96237f47d007ad3512f1ff3
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
-        ),
-        'Psr\\Http\\Client\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
         'Psr\\Container\\' => 
         array (
@@ -146,9 +151,17 @@ class ComposerStaticInitb20def97c96237f47d007ad3512f1ff3
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
+        'Obs\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/obs/esdk-obs-php/Obs',
+        ),
         'OSS\\' => 
         array (
             0 => __DIR__ . '/..' . '/aliyuncs/oss-sdk-php/src/OSS',
+        ),
+        'Monolog\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
         'League\\MimeTypeDetection\\' => 
         array (
@@ -161,10 +174,6 @@ class ComposerStaticInitb20def97c96237f47d007ad3512f1ff3
         'League\\Flysystem\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
-        ),
-        'GuzzleHttp\\UriTemplate\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/guzzlehttp/uri-template/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -207,10 +216,10 @@ class ComposerStaticInitb20def97c96237f47d007ad3512f1ff3
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitb20def97c96237f47d007ad3512f1ff3::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitb20def97c96237f47d007ad3512f1ff3::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr0 = ComposerStaticInitb20def97c96237f47d007ad3512f1ff3::$fallbackDirsPsr0;
-            $loader->classMap = ComposerStaticInitb20def97c96237f47d007ad3512f1ff3::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5a90e71634f8fad0dc07c9b0882e8bfb::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5a90e71634f8fad0dc07c9b0882e8bfb::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr0 = ComposerStaticInit5a90e71634f8fad0dc07c9b0882e8bfb::$fallbackDirsPsr0;
+            $loader->classMap = ComposerStaticInit5a90e71634f8fad0dc07c9b0882e8bfb::$classMap;
 
         }, null, ClassLoader::class);
     }

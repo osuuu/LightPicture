@@ -45,7 +45,7 @@ class QueryLocation extends AbstractLocation
         Parameter $param
     ) {
         $uri = $request->getUri();
-        $query = Psr7\Query::parse($uri->getQuery());
+        $query = Psr7\parse_query($uri->getQuery());
 
         $query[$param->getWireName()] = $this->prepareValue(
             $command[$param->getName()],
@@ -74,7 +74,7 @@ class QueryLocation extends AbstractLocation
             foreach ($command->toArray() as $key => $value) {
                 if (!$operation->hasParam($key)) {
                     $uri = $request->getUri();
-                    $query = Psr7\Query::parse($uri->getQuery());
+                    $query = Psr7\parse_query($uri->getQuery());
 
                     $query[$key] = $this->prepareValue(
                         $value,

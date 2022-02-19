@@ -13,23 +13,97 @@ $cosClient = new Qcloud\Cos\Client(
             'secretId'  => $secretId ,
             'secretKey' => $secretKey)));
 try {
+    // 多任务接口
+    $result = $cosClient->CreateMediaJobs(array(
+        'Bucket' => 'examplebucket-125000000', //存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
+        'Tag' => 'Transcode',
+        'QueueId' => 'paaf4fce5521a40888a3034a5de80f6ca',
+        'CallBack' => '',
+        'Input' => array(
+            'Object' => 'example.mp4'
+        ),
+        'Operation' => array(
+            array(
+                'TemplateId' => 't04e1ab86554984f1aa17c062fbf6c007c',
+                'Output' => array(
+                    'Region' => $region,
+                    'Bucket' => 'examplebucket-125000000', //存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
+                    'Object' => 'video01.mp4',
+                ),
+                'WatermarkTemplateId' => array(
+                    't112d18d9b2a9b430e91d3c320f80af341',
+                ),
+            ),
+            array(
+                'TemplateId' => 't04e1ab86554984f1aa17c062fbf6c007c',
+                'Output' => array(
+                    'Region' => $region,
+                    'Bucket' => 'wwj-cq-1253960454', //存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
+                    'Object' => 'video02.mp4',
+                ),
+                'WatermarkTemplateId' => array(
+                    't1bf713bb5c6a5496e859aebc4a8973ab5',
+                ),
+            ),
+        ),
+    ));
+
+    // 单任务接口
     // start --------------- 使用模版 ----------------- //
     $result = $cosClient->createMediaTranscodeJobs(array(
         'Bucket' => 'examplebucket-125000000', //存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
         'Tag' => 'Transcode',
-        'QueueId' => 'asdadadfafsdkjhfjghdfjg',
-        'CallBack' => 'https://example.com/callback',
+        'QueueId' => 'paaf4fce5521a40888a3034a5de80f6ca',
         'Input' => array(
-            'Object' => 'video01.mp4'
+            'Object' => 'example.mp4'
         ),
         'Operation' => array(
-            'TemplateId' => 'asdfafiahfiushdfisdhfuis',
+            'TemplateId' => 't04e1ab86554984f1aa17c062fbf6c007c',
             'Output' => array(
                 'Region' => $region,
                 'Bucket' => 'examplebucket-125000000', //存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
-                'Object' => 'video02.webm',
+                'Object' => 'video02.mp4',
+            ),
+            'Watermark' => arrray(
+                array(
+                    'Type' => 'Text',
+                    'LocMode' => 'Absolute',
+                    'Dx' => '64',
+                    'Dy' => '64',
+                    'Pos' => 'TopRight',
+                    'Text' => array(
+                        'Text' => '第一个水印',
+                        'FontSize' => '30',
+                        'FontType' => 'simfang.ttf',
+                        'FontColor' => '#99ff00',
+                        'Transparency' => '100', // 不透明度
+                     ),
+                ),
+                array(
+                    'Type' => 'Text',
+                    'LocMode' => 'Absolute',
+                    'Dx' => '64',
+                    'Dy' => '64',
+                    'Pos' => 'TopLeft',
+                    'Text' => array(
+                        'Text' => '第二个水印',
+                        'FontSize' => '30',
+                        'FontType' => 'simfang.ttf',
+                        'FontColor' => '#99ff00',
+                        'Transparency' => '100', // 不透明度
+                     ),
+                ),
             ),
         ),
+    ));
+    $result = $cosClient->DescribeMediaJob(array(
+        'Bucket' => 'examplebucket-125000000', //存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
+        'Key' => 'j20f7a6be6c5511eca253f3ee9d4082e0',
+    ));
+    $result = $cosClient->DescribeMediaJobs(array(
+        'Bucket' => 'examplebucket-125000000', //存储桶名称，由BucketName-Appid 组成，可以在COS控制台查看 https://console.cloud.tencent.com/cos5/bucket
+        'Tag' => 'Transcode',
+        'QueueId' => 'paaf4fce5521a40888a3034a5de80f6ca',
     ));
     // 请求成功
     print_r($result);
@@ -88,4 +162,3 @@ try {
     // 请求失败
     echo($e);
 }
-

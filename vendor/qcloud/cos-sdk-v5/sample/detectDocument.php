@@ -8,7 +8,7 @@ $region = "ap-beijing"; //替换为用户的 region，已创建桶归属的regio
 $cosClient = new Qcloud\Cos\Client(
     array(
         'region' => $region,
-        'schema' => 'https', //协议头部，默认为http
+        'schema' => 'https', // 审核时必须为https
         'credentials'=> array(
             'secretId'  => $secretId ,
             'secretKey' => $secretKey)));
@@ -19,12 +19,13 @@ try {
         'Input' => array(
             'Object' => 'test01.docx',
 //            'Type' => 'docx',
+//            'DataId' => '', // 选填 该字段在审核结果中会返回原始内容，长度限制为512字节。您可以使用该字段对待审核的数据进行唯一业务标识。
         ),
-        'Conf' => array(
-            'DetectType' => 'Porn,Terrorism,Politics,Ads',
-//            'Callback' => 'https://example.com/callback/',
+//        'Conf' => array(
 //            'BizType' => '',
-        ),
+//            'DetectType' => 'Porn,Terrorism,Politics,Ads', // 选填，在只有BizType时走设定策略的审核场景
+//            'Callback' => '', // 回调URL 选填
+//        ), // 选填 在DetectType/BizType都不传的情况下，走默认策略及默认审核场景。
     ));
 
     // 文档URL审核
@@ -33,12 +34,13 @@ try {
         'Input' => array(
             'Url' => 'https://example.com/test01.docx',
 //            'Type' => 'docx',
+//            'DataId' => '', // 选填 该字段在审核结果中会返回原始内容，长度限制为512字节。您可以使用该字段对待审核的数据进行唯一业务标识。
         ),
-        'Conf' => array(
-            'DetectType' => 'Porn,Terrorism,Politics,Ads',
-//            'Callback' => 'https://example.com/callback/',
+//        'Conf' => array(
 //            'BizType' => '',
-        ),
+//            'DetectType' => 'Porn,Terrorism,Politics,Ads', // 选填，在只有BizType时走设定策略的审核场景
+//            'Callback' => '', // 回调URL 选填
+//        ), // 选填 在DetectType/BizType都不传的情况下，走默认策略及默认审核场景。
     ));
     // 请求成功
     print_r($result);
@@ -46,4 +48,3 @@ try {
     // 请求失败
     echo($e);
 }
-

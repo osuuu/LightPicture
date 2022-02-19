@@ -1,0 +1,22 @@
+{
+	"name" : "obs/esdk-obs-php",
+	"description" : "OBS PHP SDK",
+	"license":"Apache-2.0",
+	"version":"3.21.6",
+	"require" : {
+		"php" : ">=5.6.0",
+		"guzzlehttp/guzzle" : "6.3.0",
+		"guzzlehttp/psr7" : "1.4.2",
+		"guzzlehttp/promises" : "1.3.1",
+		"psr/http-message" : "1.0.1",
+		"monolog/monolog" : "1.23.0",
+		"psr/log" : "~1.0"
+	},
+	
+	"keywords" :["obs", "php"],
+	"autoload": {
+		"psr-4": {
+			"Obs\\": "Obs/"
+		}
+    }
+}

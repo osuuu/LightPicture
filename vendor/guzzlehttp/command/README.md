@@ -1,6 +1,15 @@
 # Guzzle Commands
 
-This library uses Guzzle (``guzzlehttp/guzzle``, version 7.x) and provides the
+[![License](https://poser.pugx.org/guzzlehttp/command/license)](https://packagist.org/packages/guzzlehttp/command)
+[![Build Status](https://travis-ci.org/guzzle/command.svg?branch=master)](https://travis-ci.org/guzzle/command) 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/guzzle/command/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/guzzle/command/?branch=master) 
+[![Code Coverage](https://scrutinizer-ci.com/g/guzzle/command/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/guzzle/command/?branch=master) 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/7a93338e-50cd-42f7-9299-17c44d92148f/mini.png)](https://insight.sensiolabs.com/projects/7a93338e-50cd-42f7-9299-17c44d92148f)
+[![Latest Stable Version](https://poser.pugx.org/guzzlehttp/command/v/stable)](https://packagist.org/packages/guzzlehttp/command)
+[![Latest Unstable Version](https://poser.pugx.org/guzzlehttp/command/v/unstable)](https://packagist.org/packages/guzzlehttp/command)
+[![Total Downloads](https://poser.pugx.org/guzzlehttp/command/downloads)](https://packagist.org/packages/guzzlehttp/command)
+
+This library uses Guzzle (``guzzlehttp/guzzle``, version 6.x) and provides the
 foundations to create fully-featured web service clients by abstracting Guzzle
 HTTP **requests** and **responses** into higher-level **commands** and
 **results**. A **middleware** system, analogous to — but separate from — the one
@@ -8,7 +17,7 @@ in the HTTP layer may be used to customize client behavior when preparing
 commands into requests and processing responses into results.
 
 ### Commands
-
+    
 Key-value pair objects representing an operation of a web service. Commands have a name and a set of parameters.
 
 ### Results
@@ -25,7 +34,11 @@ For **Guzzle 5**, use ``composer require guzzlehttp/command:0.8.*``. The source
 code for the Guzzle 5 version is available on the
 `0.8 branch <https://github.com/guzzle/command/tree/0.8>`_.
 
-**Note:** If Composer is not installed [globally](https://getcomposer.org/doc/00-intro.md#globally) then you may need to run the preceding Composer commands using ``php composer.phar`` (where ``composer.phar`` is the path to your copy of Composer), instead of just ``composer``.
+**Note:** If Composer is not
+`installed globally <https://getcomposer.org/doc/00-intro.md#globally>`_,
+then you may need to run the preceding Composer commands using
+``php composer.phar`` (where ``composer.phar`` is the path to your copy of
+Composer), instead of just ``composer``.
 
 ## Service Clients
 
@@ -56,7 +69,8 @@ $command = $client->getCommand($commandName, $arguments);
 
 ```
 
-After creating a command, you may execute the command using the ``execute()`` method of the client.
+After creating a command, you may execute the command using the ``execute()``
+method of the client.
 
 ```php
 $result = $client->execute($command);
@@ -97,7 +111,7 @@ $promise = $client->fooAsync(['baz' => 'bar']);
 ```php
 $result = $promise->wait();
 
-echo $result['fizz']; //> 'buzz'
+echo $result['fizz']; //> 'buzz' 
 ```
 
 ## Concurrent Requests
@@ -114,16 +128,7 @@ Middleware can be added to the service client or underlying HTTP client to
 implement additional behavior and customize the ``Command``-to-``Result`` and
 ``Request``-to-``Response`` lifecycles, respectively.
 
-## Security
+## Todo
 
-If you discover a security vulnerability within this package, please send an email to security@tidelift.com. All security vulnerabilities will be promptly addressed. Please do not disclose security-related issues publicly until a fix has been announced. Please see [Security Policy](https://github.com/guzzle/command/security/policy) for more information.
-
-## License
-
-Guzzle is made available under the MIT License (MIT). Please see [License File](LICENSE) for more information.
-
-## For Enterprise
-
-Available as part of the Tidelift Subscription
-
-The maintainers of Guzzle and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source dependencies you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact dependencies you use. [Learn more.](https://tidelift.com/subscription/pkg/packagist-guzzlehttp-command?utm_source=packagist-guzzlehttp-command&utm_medium=referral&utm_campaign=enterprise&utm_term=repo)
+* Middleware system and command vs request layers
+* The ``HandlerStack``
