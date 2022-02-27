@@ -34,7 +34,7 @@ class EmailClass
         $data = SystemModel::where('type', 'email')->column('value', 'key');
         $email_template = SystemModel::where('type','email_template')->value('value');
         $mail = new PHPMailer();           //实例化PHPMailer对象
-        // $mail->CharSet = 'UTF-8';           //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
+        $mail->CharSet = 'UTF-8';           //设定邮件编码，默认ISO-8859-1，如果发中文此项必须设置，否则乱码
         $mail->IsSMTP();                    // 设定使用SMTP服务
         $mail->SMTPDebug = 0;               // SMTP调试功能 0=关闭 1 = 错误和消息 2 = 消息
         $mail->SMTPAuth = true;             // 启用 SMTP 验证功能

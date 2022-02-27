@@ -8,9 +8,9 @@
 
 
 // 程序版本
-define("VERSION", "1.2.1");
+define("VERSION", "1.2.2");
 // 版本号
-define("RELRAASE_TIME", "20220226");
+define("RELRAASE_TIME", "20220227");
 // 本地存储根目录
 define("FOLDER", "LightPicture/");
 // TOKEN KEY
